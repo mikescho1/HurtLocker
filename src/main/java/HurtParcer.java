@@ -70,7 +70,7 @@ public class HurtParcer {
 
         Pattern patternallMilks = Pattern.compile(regexAllMilks, Pattern.CASE_INSENSITIVE);
         Pattern pattern323 = Pattern.compile(regexMilk323, Pattern.CASE_INSENSITIVE);
-        Pattern pattern123 = Pattern.compile(regexMilk123);
+        Pattern pattern123 = Pattern.compile(regexMilk123, Pattern.CASE_INSENSITIVE);
 
         Matcher mAllMilk = patternallMilks.matcher(nameChanged);
         Matcher m323 = pattern323.matcher(nameChanged);
