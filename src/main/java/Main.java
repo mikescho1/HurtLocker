@@ -13,5 +13,13 @@ public class Main {
         String output = (new Main()).readRawDataToString();
         System.out.println(output);
 
+        HurtParcer hurtParcer = new HurtParcer();
+        String hurtLockerData = hurtParcer.getHurtLockerData();
+
+
+
+        hurtParcer.changeName(hurtLockerData);
+        System.out.println(hurtParcer.changeName(hurtLockerData));
+
     }
 }
