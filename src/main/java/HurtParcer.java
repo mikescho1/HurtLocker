@@ -7,9 +7,10 @@ import java.util.regex.Pattern;
 public class HurtParcer {
 //Value could be seperated by using a any of the following (:, @, ^, *, %)
 
-    private String hurtLockerData;
-    private String
 
+    private String hurtLockerData;
+    private String nameChanged;
+    private String milkCaseAndOccurrenceChanged;
 
 
     public HurtParcer() {
@@ -37,17 +38,38 @@ public class HurtParcer {
         return hurtLockerData;
     }
 
-    public String changeName(String stringToParse)  {
+    public String changeName(String hurtLockerData) {
         String regex = "(?i)(name).";
         Pattern pattern = Pattern.compile(regex);
-        Matcher m = pattern.matcher(stringToParse);
-        String newName = m.replaceAll("name:");
-        return newName;
+        Matcher m = pattern.matcher(hurtLockerData);
+        String nameChanged = m.replaceAll("name:");
+        return this.nameChanged = nameChanged;
     }
 
-    public String changeItem(StringToParse) {
-        String regex = "(?i)(name:)(".*)
+    //    public String changeItem(String nameChanged) {
+//        String regex = "(?i)(name:)(.*);";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher m = pattern.matcher(nameChanged);
+//        String itemChanged =
+//
+//    }
+    public String changeMilkCaseAndRecordOccurrences(String milk) {
+        String regex = "(?i)(milk)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(milk);
+        int count = 0;
+        while (m.find()) {
+            count++;
+        }
+        String milkCaseAndOccurrenceChanged = m.replaceAll("Milk\\tseen: " + count + "times");
+        return this.milkCaseAndOccurrenceChanged = milkCaseAndOccurrenceChanged;
     }
+
+    public Integer countMilkOccurrences(String milk) {
+        String regex = "(?i)(milk)";
+        Pattern pattern = Pattern.compile(regex);
+    }
+}
 
 
 }
