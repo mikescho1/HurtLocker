@@ -15,19 +15,21 @@ public class Main {
 
         HurtParcer hurtParcer = new HurtParcer();
         String hurtLockerData = hurtParcer.getHurtLockerData();
-//        String nameChanged = hurtParcer.getNameChanged();
-//        String milkCaseAndOccurrenceChanged = hurtParcer.getMilkCaseAndOccurrenceChanged();
+
+
 
 
 
 
         String nameChanged = hurtParcer.changeName(hurtLockerData);
         String milkCaseAndOccurrenceChanged = hurtParcer.changeMilkCaseAndRecordOccurrences(nameChanged);
-//        String milkPricesChanged = hurtParcer.countAndRemoveDuplicateMilkPrices(milkCaseAndOccurrenceChanged);
+        String removedIrrelevant = hurtParcer.removeIrrelevantData(milkCaseAndOccurrenceChanged);
+//        String breadCaseAndOccurrenceChanged = hurtParcer.changeBreadCaseAndRecordOccurrences(milkCaseAndOccurrenceChanged);
 
-
-        System.out.println(hurtParcer.changeName(hurtLockerData));
-        System.out.println(hurtParcer.changeMilkCaseAndRecordOccurrences(nameChanged));
+        System.out.println(nameChanged);
+        System.out.println(milkCaseAndOccurrenceChanged);
+        System.out.println(removedIrrelevant);
+//        System.out.println(hurtParcer.changeBreadCaseAndRecordOccurrences(milkCaseAndOccurrenceChanged));
 //        System.out.println(hurtParcer.countAndRemoveDuplicateMilkPrices(milkCaseAndOccurrenceChanged));
 
     }
