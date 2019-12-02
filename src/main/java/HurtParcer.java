@@ -106,21 +106,39 @@ public class HurtParcer {
         return this.milkCaseAndOccurrenceChanged = milkCaseAndOccurrenceChanged;
     }
 
-    public String changeBreadCaseAndRecordOccurrences(String milkCaseAndOccurrenceChanged)  {
-        String regexAllBreads = "(bread);price:[13].23";
-        String regexBread323 = "(bread);price:3.23";
-        String regexBread123 = "(bread);price:1.23";
-
-     return null;
-    }
 
     public String removeIrrelevantData(String milkCaseAndOccurrenceChanged) {
-        String regexIrrelevantData = ("type.*?##");
+        String regexIrrelevantData = (";?type.*?##name:");
         Pattern irrelevantPattern = Pattern.compile(regexIrrelevantData, Pattern.CASE_INSENSITIVE);
         Matcher irrelevantMatcher = irrelevantPattern.matcher(milkCaseAndOccurrenceChanged);
 
         String removedIrrelevant = irrelevantMatcher.replaceAll("");
         return this.removedIrrelevant = removedIrrelevant;
+    }
+
+    public String changeBreadCaseAndRecordOccurrences(String removedIrrelevant) {
+        String regexAllBreads = " *?(bread);price:1.23";
+//        String regexBread123 = "(bread);price:1.23";
+
+        Pattern allBreadPattern = Pattern.compile(regexAllBreads, Pattern.CASE_INSENSITIVE);
+//        Pattern bread123Pattern = Pattern.compile(regexBread123, Pattern.CASE_INSENSITIVE);
+
+        Matcher allBreadMatcher = allBreadPattern.matcher(removedIrrelevant);
+
+
+        int counter = 0;
+        while (allBreadMatcher.find()) {
+            counter++;
+        }
+        String breadCaseAndOccurrenceChanged = allBreadMatcher.replaceFirst("name:   Bread\t\tseen: " + counter + " times\n" +
+                "=============\t\t=============\n" +
+                "Price:   1.23\t\tseen: " + counter + " times\n" +
+                "\n");
+        allBreadMatcher = allBreadPattern.matcher(breadCaseAndOccurrenceChanged);
+        breadCaseAndOccurrenceChanged = allBreadMatcher.replaceAll("");
+
+
+        return this.breadCaseAndOccurrenceChanged = breadCaseAndOccurrenceChanged;
     }
 
 
