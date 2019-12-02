@@ -64,35 +64,79 @@ public class HurtParcer {
 //
 //    }
     public String changeMilkCaseAndRecordOccurrences(String nameChanged) {
+        String regexAllMilks = "(milk);price:[13].23";
+        String regexMilk323 = "(milk);price:3.23";
+        String regexMilk123 = "(milk);price:1.23";
 
-        String regex = "(?i)(milk)";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher m = pattern.matcher(nameChanged);
-        int count = 0;
-        String changeFirstMilkCase = "";
+        Pattern patternallMilks = Pattern.compile(regexAllMilks, Pattern.CASE_INSENSITIVE);
+        Pattern pattern323 = Pattern.compile(regexMilk323, Pattern.CASE_INSENSITIVE);
+        Pattern pattern123 = Pattern.compile(regexMilk123);
+
+        Matcher mAllMilk = patternallMilks.matcher(nameChanged);
+        Matcher m323 = pattern323.matcher(nameChanged);
+        Matcher m123 = pattern123.matcher(nameChanged);
+
+        int countAllMilk = 0;
+        int count323 = 0;
+        int count123 = 0;
+
+        String changeFirstMilk323 = "";
         String milkCaseAndOccurrenceChanged = "";
 
-        while (m.find()) {
-            count++;
+        while (mAllMilk.find()) {
+            countAllMilk++;
         }
-        changeFirstMilkCase = m.replaceFirst("Milk\t\tseen: " + count + " times\n=============\t\t=============\n");    //formats fist milk occurrence.
-        regex = "(?i)(milk);";
-        pattern = pattern.compile(regex);
-        m = pattern.matcher((changeFirstMilkCase));
-        milkCaseAndOccurrenceChanged = m.replaceAll("");    //removes duplicate milk occurrences.
+        while (m123.find()) {
+            count123++;
+        }
+        while (m323.find()) {
+            count323++;
+        }
+
+        changeFirstMilk323 = m323.replaceFirst("Milk\t\tseen: " + countAllMilk + " times\n" +
+                "=============\t\t=============\n" +
+                "Price:\t 3.23\t\tseen: " + count323 + " times\n" +
+                "-------------\t\t-------------\n" +
+                "Price:   1.23\t\tseen: " + count123 + " times\n" +
+                "\n");    //formats fist milk occurrence.
+        regexMilk323 = "milk;price:3.23;";
+        pattern323 = Pattern.compile(regexMilk323, Pattern.CASE_INSENSITIVE);
+
+        m323 = pattern323.matcher((changeFirstMilk323));
+        milkCaseAndOccurrenceChanged = m323.replaceAll("");
+
 
         return this.milkCaseAndOccurrenceChanged = milkCaseAndOccurrenceChanged;
     }
 
     public String countAndRemoveDuplicateMilkPrices(String milkCaseAndOccurrenceChanged) {
-        String regex = " .?((?i)(price)).?(3.23)?";
+        String regex = " .?((?i)(price)).?(3.23)+";
+        String regex1 = " .?((?i)(price)).?(1.23)+";
+        String regex2 = " .?((?i)(price)).?(1.23)+";
+
         Pattern pattern = Pattern.compile(regex);
+        Pattern lowPricePattern = Pattern.compile(regex1);
+        Pattern noPricePattern = Pattern.compile(regex2);
+
         Matcher m = pattern.matcher(milkCaseAndOccurrenceChanged);
+        Matcher m1 = lowPricePattern.matcher(milkCaseAndOccurrenceChanged);
+        Matcher m2 = noPricePattern.matcher(milkCaseAndOccurrenceChanged);
+
         String removeDuplicatetMilkPrices = "";
         String milkPricesChanged = "";
         int count = 0;
-        while (m.find()) {
-            count++;
+        int count1 = 0;
+        int count2 = 0;
+        while (m.find() && m1.find() && m2.find()) {
+            if (m.find()) {
+                count++;
+            }
+            if (m1.find()) {
+                count1++;
+            }
+            if (m2.find()) {
+                count2++;
+            }
         }
         removeDuplicatetMilkPrices = m.replaceAll("");
         regex = ";price:3.23";
@@ -102,6 +146,7 @@ public class HurtParcer {
 
         return this.milkPricesChanged = milkPricesChanged;
     }
+}
 
 
 //    public Integer countMilkOccurrences(String milk) {
@@ -110,7 +155,7 @@ public class HurtParcer {
 //    }
 
 
-}
+
 
 
 

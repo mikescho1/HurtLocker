@@ -23,12 +23,12 @@ public class Main {
 
         String nameChanged = hurtParcer.changeName(hurtLockerData);
         String milkCaseAndOccurrenceChanged = hurtParcer.changeMilkCaseAndRecordOccurrences(nameChanged);
-        String milkPricesChanged = hurtParcer.countAndRemoveDuplicateMilkPrices(milkCaseAndOccurrenceChanged);
+//        String milkPricesChanged = hurtParcer.countAndRemoveDuplicateMilkPrices(milkCaseAndOccurrenceChanged);
 
 
         System.out.println(hurtParcer.changeName(hurtLockerData));
         System.out.println(hurtParcer.changeMilkCaseAndRecordOccurrences(nameChanged));
-        System.out.println(hurtParcer.countAndRemoveDuplicateMilkPrices(milkCaseAndOccurrenceChanged));
+//        System.out.println(hurtParcer.countAndRemoveDuplicateMilkPrices(milkCaseAndOccurrenceChanged));
 
     }
 }
