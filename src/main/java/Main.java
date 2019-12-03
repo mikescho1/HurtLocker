@@ -26,12 +26,15 @@ public class Main {
         String removedIrrelevant = hurtParcer.removeIrrelevantData(milkCaseAndOccurrenceChanged);
         String breadCaseAndOccurrenceChanged = hurtParcer.changeBreadCaseAndRecordOccurrences(removedIrrelevant);
         String cookieCaseAndOccurrencesChanged = hurtParcer.changedCookieCaseAndOccurrences(breadCaseAndOccurrenceChanged);
+        String appleCaseAndOccurrencesChanged = hurtParcer.changeApplesCaseAndOccurrences(cookieCaseAndOccurrencesChanged);
 
         System.out.println(nameChanged);
         System.out.println(milkCaseAndOccurrenceChanged);
         System.out.println(removedIrrelevant);
         System.out.println(breadCaseAndOccurrenceChanged);
         System.out.println(cookieCaseAndOccurrencesChanged);
+        System.out.println(appleCaseAndOccurrencesChanged);
+
 
     }
 }

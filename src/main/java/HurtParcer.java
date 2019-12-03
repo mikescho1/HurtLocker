@@ -18,6 +18,7 @@ public class HurtParcer {
     private String breadCaseAndOccurrenceChanged;
     private String removedIrrelevant;
     private String cookieCaseAndOccurrencesChanged;
+    private String appleCaseAndOccurrencesChanged;
 
 
     public HurtParcer() {
@@ -177,7 +178,10 @@ public class HurtParcer {
         Matcher cookiem = cookiep.matcher(cookieDeleter);
         cookie = cookiem.replaceAll(" Cookies\t\tseen: " + counter + " times\n" +
                 "=============\t\t=============\n" +
-                "Price:   2.25\t\tseen: " + counter + " times\n");
+                "Price:   2.25\t\tseen: " + counter + " times\n" +
+                "-------------\t\t-------------\n" +
+                "\n" +
+                "name:");
 //
 //        Pattern letterCookiePattern = Pattern.compile(regexLetterCookies, Pattern.CASE_INSENSITIVE);
 //        Matcher letterCookieMatcher = letterCookiePattern.matcher(breadCaseAndOccurrenceChanged);
@@ -194,6 +198,33 @@ public class HurtParcer {
 
         return this.cookieCaseAndOccurrencesChanged = cookie;
     }
+
+    public String changeApplesCaseAndOccurrences(String cookieCaseAndOccurrencesChanged)    {
+        String applesRegexNoNumber = ("[^e]    apples");
+        Pattern noNumPattern = Pattern.compile(applesRegexNoNumber, Pattern.CASE_INSENSITIVE);
+        Matcher noNumMatcher = noNumPattern.matcher(cookieCaseAndOccurrencesChanged);
+
+        int count = 0;
+        while(noNumMatcher.find())  {
+            count++;
+        }
+
+
+        String noNumApples = noNumMatcher.replaceAll("");
+
+        String lastAppleRegex = (".*apples.*");
+        Pattern lastApplePattern = Pattern.compile(lastAppleRegex, Pattern.CASE_INSENSITIVE);
+        Matcher lastAppleMatcher = lastApplePattern.matcher(noNumApples);
+        String almostDonethisNonSenseDoneCompletelyWrongTheWholeTime = lastAppleMatcher.replaceAll("name:  Apples\t\tseen: " + count + " times\n" +
+                "=============\t\t=============\n" +
+                "Price:   0.25\t\tseen 2 times\n" +
+                "\n" +
+                "Errors\t\t\t\tseen: 4 times");
+
+        return this.appleCaseAndOccurrencesChanged = almostDonethisNonSenseDoneCompletelyWrongTheWholeTime;
+    }
+
+
 
 
 }
