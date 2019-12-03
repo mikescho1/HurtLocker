@@ -1,6 +1,10 @@
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +17,7 @@ public class HurtParcer {
     private String milkCaseAndOccurrenceChanged;
     private String breadCaseAndOccurrenceChanged;
     private String removedIrrelevant;
+    private String cookieCaseAndOccurrencesChanged;
 
 
     public HurtParcer() {
@@ -44,11 +49,17 @@ public class HurtParcer {
         return nameChanged;
     }
 
+//    public String getObjectString() {
+//
+//    }
+
     public String getMilkCaseAndOccurrenceChanged() {
         return milkCaseAndOccurrenceChanged;
     }
 
     public String changeName(String hurtLockerData) {
+        TreeMap<String, Double> cookie = new TreeMap<>();
+
 
         String regex = "(?i)(name).";
         Pattern pattern = Pattern.compile(regex);
@@ -74,6 +85,7 @@ public class HurtParcer {
         int countAllMilk = 0;
         int count323 = 0;
         int count123 = 0;
+
 
         String changeFirstMilk323 = "";
         String milkCaseAndOccurrenceChanged = "";
@@ -108,23 +120,24 @@ public class HurtParcer {
 
 
     public String removeIrrelevantData(String milkCaseAndOccurrenceChanged) {
-        String regexIrrelevantData = (";?type.*?##name:");
+        String regexIrrelevantData = (":*? *?;?type.*?##(name)?:?");
         Pattern irrelevantPattern = Pattern.compile(regexIrrelevantData, Pattern.CASE_INSENSITIVE);
         Matcher irrelevantMatcher = irrelevantPattern.matcher(milkCaseAndOccurrenceChanged);
 
+        String semiColonAndWhiteSpaceregex = (":na");
+        Pattern semiColonAndWhiteSpacePattern = Pattern.compile(semiColonAndWhiteSpaceregex);
+
+
         String removedIrrelevant = irrelevantMatcher.replaceAll("");
+        Matcher semiColonAndWhiteSpaceMatcher = semiColonAndWhiteSpacePattern.matcher(removedIrrelevant);
+        removedIrrelevant = semiColonAndWhiteSpaceMatcher.replaceAll("");
         return this.removedIrrelevant = removedIrrelevant;
     }
 
     public String changeBreadCaseAndRecordOccurrences(String removedIrrelevant) {
         String regexAllBreads = " *?(bread);price:1.23";
-//        String regexBread123 = "(bread);price:1.23";
-
         Pattern allBreadPattern = Pattern.compile(regexAllBreads, Pattern.CASE_INSENSITIVE);
-//        Pattern bread123Pattern = Pattern.compile(regexBread123, Pattern.CASE_INSENSITIVE);
-
         Matcher allBreadMatcher = allBreadPattern.matcher(removedIrrelevant);
-
 
         int counter = 0;
         while (allBreadMatcher.find()) {
@@ -133,12 +146,53 @@ public class HurtParcer {
         String breadCaseAndOccurrenceChanged = allBreadMatcher.replaceFirst("name:   Bread\t\tseen: " + counter + " times\n" +
                 "=============\t\t=============\n" +
                 "Price:   1.23\t\tseen: " + counter + " times\n" +
-                "\n");
+                "\nname: ");
         allBreadMatcher = allBreadPattern.matcher(breadCaseAndOccurrenceChanged);
         breadCaseAndOccurrenceChanged = allBreadMatcher.replaceAll("");
 
-
         return this.breadCaseAndOccurrenceChanged = breadCaseAndOccurrenceChanged;
+    }
+
+    public String changedCookieCaseAndOccurrences(String breadCaseAndOccurrenceChanged) {
+//        String regexLetterCookies = " *?cook.*?:";
+        String allCookiesRegex = " *?co[o0]k.*?:";
+//        String regexNumberCookies = " *?co0kies";
+
+
+        Pattern allCookiePattern = Pattern.compile(allCookiesRegex, Pattern.CASE_INSENSITIVE);
+        Matcher allCookieMatcher = allCookiePattern.matcher(breadCaseAndOccurrenceChanged);
+        int counter = 0;
+        while (allCookieMatcher.find()) {
+            counter++;
+        }
+        String allCookieString = allCookieMatcher.replaceAll("Cookie");
+
+        String regex = ("[^:]Cookie");
+        Pattern duplicateCookieDeleter = Pattern.compile(regex);
+        Matcher duplicateCookieMatcher = duplicateCookieDeleter.matcher(allCookieString);
+        String cookieDeleter = duplicateCookieMatcher.replaceAll("");
+
+        String cookie = ("Cookie");
+        Pattern cookiep = Pattern.compile(cookie);
+        Matcher cookiem = cookiep.matcher(cookieDeleter);
+        cookie = cookiem.replaceAll(" Cookies\t\tseen: " + counter + " times\n" +
+                "=============\t\t=============\n" +
+                "Price:   2.25\t\tseen: " + counter + " times\n");
+//
+//        Pattern letterCookiePattern = Pattern.compile(regexLetterCookies, Pattern.CASE_INSENSITIVE);
+//        Matcher letterCookieMatcher = letterCookiePattern.matcher(breadCaseAndOccurrenceChanged);
+
+
+//        String letterCookiesRemoved = letterCookieMatcher.replaceAll("");
+//        Pattern numberCookiePattern = Pattern.compile(regexNumberCookies, Pattern.CASE_INSENSITIVE);
+
+//        Matcher numberCookieMatcher = numberCookiePattern.matcher(letterCookiesRemoved);
+//        String cookieCaseAndOccurrenceChanged = numberCookieMatcher.replaceFirst("Cookies\t\tseen: " + counter + " times\n" +
+//                "=============\t\t=============\n" +
+//                "Price:   2.25\t\tseen: " + counter + " times\n");
+
+
+        return this.cookieCaseAndOccurrencesChanged = cookie;
     }
 
 
